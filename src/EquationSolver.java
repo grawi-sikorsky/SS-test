@@ -1,14 +1,17 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class EquationSolver {
 
     List<List<String>> listaA = new ArrayList<>();
     List<List<String>> listaB = new ArrayList<>();
+    List<List<String>> listaC = new ArrayList<>();
+    Map<String, String> listaD = new HashMap<>();
 
     public void solve() {
 
@@ -71,25 +74,44 @@ public class EquationSolver {
         }
 
         // Compare equations, filter from duplicates
-        StringBuilder digs = new StringBuilder();
-        for (Integer i = 0; i < listaA.size(); ++i) {
-            for (Integer j = 0; j < listaB.size(); ++j) {
+        for (int i = 0; i < listaA.size(); ++i) {
+            for (int j = 0; j < listaB.size(); ++j) {
 
-                
-                System.out.println(listaA.get(i).get(2).toString());
-                String digs1 = String.valueOf(listaA.get(i).toString() + listaB.get(j).toString());
+                if (listaA.get(i).get(2).equals(listaB.get(j).get(0))) {
+                    // olaboooogaa..
+                    listaC.add(Arrays.asList(listaA.get(i).get(0), listaA.get(i).get(1), listaA.get(i).get(2),
+                            listaB.get(j).get(1).toString(), listaB.get(j).get(2).toString()));
+                }
+            }
+        }
 
-                Set<Character> charsSet = digs.chars().mapToObj(e -> (char) e).collect(Collectors.toSet());
 
-                if (charsSet.size() != digs.length()) {
-                    digs.setLength(0);
+        for (List<String> possibility : listaC) {
+            StringBuilder digits = new StringBuilder();
+            Map<Character, Integer> charMap = new HashMap<Character, Integer>();
+            int duplicates = 0;
+            for (int i = 0; i < possibility.size(); ++i) {
+                digits.append(String.valueOf(possibility.get(i)));
+            }
+            String temp = digits.toString();
+            char chararray[] = temp.toCharArray();
+
+            // System.out.println(temp.chars().mapToObj(i -> (char)
+            // i).collect(Collectors.groupingBy(Object::toString,Collectors.counting())));
+
+            for (int i = 0; i < temp.length(); ++i) {
+                if (charMap.containsKey(temp.charAt(i))) {
+                    break;
                 } else {
-                    digs.setLength(0);
+                    charMap.put(temp.charAt(i), 1);
+                }
+                if (charMap.size() == 9) {
+                    System.out.print("bez powtorki: ");
+                    System.out.println(possibility);
                 }
             }
         }
 
         System.out.println("Czas wykonania metody: " + (System.currentTimeMillis() - startTime) + " ms");
     }
-
 }
