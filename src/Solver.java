@@ -15,27 +15,27 @@ public class Solver {
         return result;
     }
 
-    public Integer getBlockNumber(Integer rowsOrColumns, Integer selectedRow, Integer selectedColumn, Integer selectedLayer) {
-        
-        StringBuilder pos = new StringBuilder();
-        Map<String,Integer> blockPositions = new HashMap<>();
+    public Integer getBlockNumber(Integer rowsOrColumns, Integer selectedRow, Integer selectedColumn,
+            Integer selectedLayer) {
 
-        Integer x=0,y=1,z=1;
+        StringBuilder pos = new StringBuilder();
+        Map<String, Integer> blockPositions = new HashMap<>();
+
+        Integer x = 0, y = 1, z = 1;
         Integer rows = rowsOrColumns;
-        for(Integer i = 1; i <= countBlocks(rowsOrColumns); ++i){
-            if(x < rows )
-            {
+        for (Integer i = 1; i <= countBlocks(rowsOrColumns); ++i) {
+            if (x < rows) {
                 ++x;
             } else if (y < rows) {
-                x=1;
+                x = 1;
                 ++y;
-            } else if (z < rows*rows){
-                x=1;
-                y=1;
+            } else if (z < rows * rows) {
+                x = 1;
+                y = 1;
                 ++z;
                 --rows;
             }
-        
+
             pos.append(x);
             pos.append(y);
             pos.append(z);
